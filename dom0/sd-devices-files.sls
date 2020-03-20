@@ -22,8 +22,11 @@ sd-devices-install-libreoffice:
     - install_recommends: False
 
 # Install securedrop-export package https://github.com/freedomofpress/securedrop-export
+# Temporary: Install local svs-disp package
 sd-devices-install-package:
-  pkg.installed:
-    - name: securedrop-export
-    - require:
-      - sls: fpf-apt-test-repo
+  file.managed:
+    - name: /opt/securedrop-export.deb
+    - source: salt://sd/sd-workstation/securedrop-export_0.2.2+buster_all.deb
+    - mode: 644
+  cmd.run:
+    - name: apt install -y /opt/securedrop-export.deb
